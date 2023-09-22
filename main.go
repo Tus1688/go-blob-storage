@@ -48,7 +48,7 @@ func initRouter() *chi.Mux {
 
 			filename := uuid.New().String() + filepath.Ext(m.Filename)
 
-			dst, err := os.Create(filename)
+			dst, err := os.Create("/usr/share/nginx/html/" + filename)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				return
@@ -71,7 +71,7 @@ func initRouter() *chi.Mux {
 		"/file/{filename}", func(w http.ResponseWriter, r *http.Request) {
 			filename := chi.URLParam(r, "filename")
 
-			err := os.Remove(filename)
+			err := os.Remove("/usr/share/nginx/html/" + filename)
 			if err != nil {
 				w.WriteHeader(http.StatusNotFound)
 				return
